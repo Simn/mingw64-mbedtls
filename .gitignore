@@ -1,0 +1,4 @@
+mingw64-i686-mbedtls-2.16.3-1.noarch/
+mingw64-x86_64-mbedtls-2.16.3-1.noarch/
+*.gz
+*.tgz

@@ -1,0 +1,12 @@
+--- a/library/CMakeLists.txt
++++ b/library/CMakeLists.txt
+@@ -177,7 +177,9 @@
+     target_link_libraries(mbedtls ${libs} mbedx509)
+
+     install(TARGETS mbedtls mbedx509 mbedcrypto
+-            DESTINATION ${LIB_INSTALL_DIR}
++            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
++            ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
++            RUNTIME DESTINATION bin
+             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ endif(USE_SHARED_MBEDTLS_LIBRARY)

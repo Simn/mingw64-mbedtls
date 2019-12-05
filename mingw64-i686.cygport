@@ -1,0 +1,45 @@
+CROSS_HOST="i686-w64-mingw32"
+inherit cross
+inherit cmake
+
+NAME="mingw64-i686-mbedtls"
+VERSION=2.16.3
+RELEASE=1
+CATEGORY="Net"
+SUMMARY="Light-weight cryptographic and SSL/TLS library"
+DESCRIPTION="A light-weight open source cryptographic and SSL/TLS library written in C.
+Mbed TLS makes it easy for developers to include
+cryptographic and SSL/TLS capabilities in their (embedded)
+applications with as little hassle as possible."
+HOMEPAGE="https://tls.mbed.org/"
+SRC_URI="https://tls.mbed.org/download/mbedtls-${VERSION}-apache.tgz"
+SRC_DIR="mbedtls-${VERSION}"
+PATCH_URI="mbedtls-2.16.3-bindir-fix.patch"
+NO_AUTOHEADER=1
+
+DEPEND="doxygen graphviz perl"
+
+CYGCMAKE_ARGS="
+	-DUSE_STATIC_MBEDTLS_LIBRARY=ON
+	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
+	-DENABLE_PROGRAMS=OFF
+"
+
+src_compile() {
+	cd ${S}
+	lndirs
+
+	cd ${B}
+	cygcmake
+	cygmake lib
+}
+
+src_install() {
+	cd ${B}
+	cyginstall
+}
+
+src_test() {
+	cd ${B}
+	make check
+}
