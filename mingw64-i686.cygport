@@ -30,6 +30,7 @@ src_compile() {
 	lndirs
 
 	cd ${B}
+	export LDFLAGS='-static-libgcc'
 	cygcmake
 	cygmake lib
 }
