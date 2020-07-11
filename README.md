@@ -1,3 +1,3 @@
 # mingw64-x86_64-mbedtls
 
-Just unpack the release corresponding to your platform into your cygwin root and hope that it works.
+Download the [release](https://github.com/Simn/mingw64-mbedtls/releases) corresponding to your platform into your Cygwin root install directory, and unpack it with `tar -xf [file]`.
