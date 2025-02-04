@@ -1,0 +1,62 @@
+name: CI
+on:
+  [push, pull_request]
+
+env:
+  PACKAGE: mbedtls
+  CYGWIN_DEPENDENCIES: cmake
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch: [i686, x86_64]
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # fix line endings for cygwin bash
+      - run: git config --global core.autocrlf input
+      - uses: actions/checkout@v4
+
+      # run this before installing cygwin bash to avoid \r problems
+      - run: |
+          version=$(cat mingw64-${{ matrix.arch }}.cygport | grep VERSION=)
+          release_number=$(cat mingw64-${{ matrix.arch }}.cygport | grep RELEASE=)
+          package_version=${version#*=}-${release_number#*=}
+          echo $package_version
+          echo PACKAGE_VERSION=$package_version >> $GITHUB_ENV
+        name: Export package version
+
+      - uses: cygwin/cygwin-install-action@v5
+        with:
+          packages: mingw64-${{ matrix.arch }}-gcc-core, cygport, ${{ env.CYGWIN_DEPENDENCIES }}
+
+      - run: cygport mingw64-${{ matrix.arch }} download
+        name: Download
+      - run: cygport mingw64-${{ matrix.arch }} all
+        name: Build
+
+      - uses: actions/upload-artifact@v4
+        env:
+          DIST_DIR: mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}.noarch/dist/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}
+        with:
+          path: ${{ env.DIST_DIR }}/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}.tar.xz
+          name: artifact-${{ matrix.arch }}
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+
+      - run: |
+          gh release create ${{ github.ref_name }} \
+            --verify-tag \
+            --title ${{ github.ref_name }} \
+            artifact-*/*.tar.xz
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
