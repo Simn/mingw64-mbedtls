@@ -14,7 +14,7 @@ cygport mingw64-x86_64.cygport all
 To test the package, you can unzip it into the root directory:
 
 ```sh
-tar -C / -xvf mingw64-x86_64-mbedtls-*-1.noarch/dist/mingw64-x86_64-mbedtls/mingw64-x86_64-mbedtls-*-1.tar.xz
+tar -C / -xvf mingw64-x86_64-mbedtls-*-1.noarch/dist/mingw64-x86_64-mbedtls/mingw64-x86_64-mbedtls-*-1-noarch.tar.xz
 ```
 
 See [cygwin documentation](https://cygwin.com/packaging-contributors-guide.html) for more information.
