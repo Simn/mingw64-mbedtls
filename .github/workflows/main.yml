@@ -44,6 +44,7 @@ jobs:
         with:
           path: ${{ env.DIST_DIR }}/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}.tar.xz
           name: artifact-${{ matrix.arch }}
+          if-no-files-found: error
 
   release:
     needs: build
