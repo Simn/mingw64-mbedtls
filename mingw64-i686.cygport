@@ -3,7 +3,7 @@ inherit cross
 inherit cmake
 
 NAME="mingw64-i686-mbedtls"
-VERSION=3.6.2
+VERSION=3.6.5
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Light-weight cryptographic and SSL/TLS library"
@@ -14,13 +14,14 @@ applications with as little hassle as possible."
 HOMEPAGE="https://www.trustedfirmware.org/projects/mbed-tls/"
 SRC_URI="https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-${VERSION}/mbedtls-${VERSION}.tar.bz2"
 SRC_DIR="mbedtls-${VERSION}"
+PATCH_URI="https://github.com/Mbed-TLS/mbedtls/pull/10165/commits/3e715b02e675f821960ddc6981d7b739ba9eb9b3.patch"
 NO_AUTOHEADER=1
 
 CYGCMAKE_ARGS="
 	-DUSE_STATIC_MBEDTLS_LIBRARY=ON
 	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
 	-DENABLE_PROGRAMS=OFF
-	-DENABLE_TESTING=Off
+	-DENABLE_TESTING=OFF
 "
 
 src_compile() {
