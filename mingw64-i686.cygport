@@ -3,7 +3,7 @@ inherit cross
 inherit cmake
 
 NAME="mingw64-i686-mbedtls"
-VERSION=3.6.2
+VERSION=3.6.5
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Light-weight cryptographic and SSL/TLS library"
