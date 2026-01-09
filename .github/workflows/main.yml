@@ -42,7 +42,7 @@ jobs:
         env:
           DIST_DIR: mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}.noarch/dist/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}
         with:
-          path: ${{ env.DIST_DIR }}/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}.tar.xz
+          path: ${{ env.DIST_DIR }}/mingw64-${{ matrix.arch }}-${{ env.PACKAGE }}-${{ env.PACKAGE_VERSION }}-noarch.tar.xz
           name: artifact-${{ matrix.arch }}
           if-no-files-found: error
 
